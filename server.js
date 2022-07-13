@@ -2,7 +2,7 @@ const express = require('express');
 const path = require("path");
 const fs = require('fs');
 const crypto = require('crypto');
-const { readFromFile, readAndAppend } = require('./utils/fsUtils');
+const { readFromFile, writeToFile, readAndAppend } = require('./utils/fsUtils');
 
 // const routes = require('./routes');
 const app = express();
@@ -35,8 +35,6 @@ app.get('/', (req, res) => {
 
 app.get('/api/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-    // const {note} = req.body;
-    // res.json(data);
 });
 
 app.get('/api/notes/:id', (req, res) => {
@@ -60,14 +58,21 @@ app.post('/api/notes', (req, res) => {
     } else {
         res.error('Error adding note');
     }
-// const newNote = req.body;
-// data.push(newNote)
-// res.sendFile(path.join(__dirname, 'public', 'notes.html'));
 });
 
-app.delete('/api/', (req, res) => {
-    console.log("I'M HIT!!!!!");
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.delete('/api/notes/:id', (req, res) => {
+    console.log(`${req.method} request received to delete note`);
+    const noteId = req.params.id;
+    console.log(`Deleting note with id ${noteId}`);
+    const data = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
+    console.log(typeof data);
+    
+    const newData = data.filter(note => {
+       return note.id != noteId;
+    });
+
+    writeToFile("./db/db.json", newData);
+    res.json(newData);
 });
   
 
