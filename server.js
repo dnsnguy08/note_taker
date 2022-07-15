@@ -11,15 +11,13 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.get('/notes', (req, res) => {
-  console.log("I'M HIT NOTES!!!");
   res.sendFile(path.join(__dirname, 'public', 'notes.html'));
 });
 
 app.get('/', (req, res) => {
-    console.log("I'M HIT!!!!!");
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
 
@@ -30,22 +28,17 @@ app.get('/api/notes', (req, res) => {
 
 app.post('/api/notes', (req, res) => {
     console.log(`${req.method} request received to add note`);
-    console.log(req.body);
-    
+
+    // destructure title and text from the request body
     const { title, text } = req.body;
     const newNote = {
         title,
         text,
-        id: crypto.randomBytes(2).toString("hex"),
+        id: crypto.randomBytes(2).toString("hex"), // use crypto lib to generate random id
     };
     const notes = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
     notes.push(newNote);
     writeToFile('./db/db.json', notes);
-    // fs.writeFileSync('./db/db.json', JSON.stringify(notes), function(err) {
-    //     if (err) {
-    //         console.log(err);                
-    //     }
-    // })
     res.json(notes);
 });
 
