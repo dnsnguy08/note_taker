@@ -13,7 +13,8 @@
   - [Repository Link](#repository)
   - [Questions](#questions)
   
-  ![note_take_screenshot](./Assets/images/team_profile_screenshot.png)
+  ![note_take_screenshot1](./public/assets/images/my-note-planner.png)
+  ![note_take_screenshot2](./public/assets/images/my-note-planner-active.png)
   
   ## Installation
         - Clone the repo
@@ -45,6 +46,7 @@
   This application uses an Express.js back end and will save and retrieve note data from a JSON file.
   
   ## Repository
+  - [Live App](https://my-note-planner.herokuapp.com/)
   - [Project Repo](https://github.com/dnsnguy08/note_taker)
   ## Questions
   For any questions, please reach out to:
