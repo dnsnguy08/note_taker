@@ -19,6 +19,7 @@
   ## Installation
         - Clone the repo
         - npm i
+        - Run 'npm start server.js'
   ## Usage
     GIVEN a note-taking application
     WHEN I open the Note Taker
